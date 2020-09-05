@@ -23,7 +23,7 @@ export const useFetch = (url) => {
     const callApi = (formData) => {
 
         setLoading(true);
-        
+        setError({ message: "" });
         axios.post(
             'http://localhost:8080/face-recognition/upload',
             formData,

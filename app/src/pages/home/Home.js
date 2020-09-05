@@ -40,7 +40,7 @@ const Home = () => {
                                 ? <img
                                     src={value.file}
                                     alt="image preview"
-                                    style={{ maxWidth: 450 }}
+                                    style={{ maxWidth: 350 }}
                                 />
                                 : ''
                         }
