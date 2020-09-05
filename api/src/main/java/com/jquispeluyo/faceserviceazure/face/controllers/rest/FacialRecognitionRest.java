@@ -31,9 +31,7 @@ public class FacialRecognitionRest {
     public Object uploadFile(@RequestParam("file") MultipartFile filePart) throws IOException {
 
         String link = gcsService.upload(filePart);
-        Object s = facialRecognition.byUrl(new Url(link));
-        System.out.println(s);
-        return s;
+        return facialRecognition.byUrl(new Url(link));
 
     }
 
