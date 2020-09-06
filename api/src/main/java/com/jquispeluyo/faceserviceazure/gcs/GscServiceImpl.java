@@ -25,7 +25,6 @@ public class GscServiceImpl implements GcsService {
         final String FILENAME = new DateTime(new Date()).toString() + "-" + filePart.getOriginalFilename();
         final String BUCKETNAME = "face-temp";
 
-
         BlobInfo blobInfo = storage.create(
                 BlobInfo
                         .newBuilder(BUCKETNAME, FILENAME)
