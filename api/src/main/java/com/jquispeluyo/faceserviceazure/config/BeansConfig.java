@@ -18,30 +18,38 @@ import java.io.InputStream;
 @Configuration
 public class BeansConfig {
 
-    @Value("${CREDENTIALS_GMAIL}")
-    private String gservicesConfig;
+    @Value("${GOOGLE_CREDENTIALS:no_found}")
+    private String gscCredentials;
+
+    @Value("${ENTORNO:dev}")
+    private String env;
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-
-        System.out.println(gservicesConfig);
-        return builder.build();
-
-    }
+    public RestTemplate restTemplate(RestTemplateBuilder builder) { return builder.build(); }
 
     @Bean
     public Storage storage() throws IOException {
+        if(env.equals("dev")){
+            return StorageOptions.newBuilder()
+                    .setProjectId("ci-cd-demo-275102")
+                    .build()
+                    .getService();
 
-        ///System.out.println(env.getProperty("GOOGLE_CREDENTIALS"));
-        System.out.println(gservicesConfig);
-        JsonObject jsonObject = JsonParser.parseString(gservicesConfig).getAsJsonObject();
-        InputStream is = new ByteArrayInputStream(jsonObject.toString().getBytes());
+        }else if(env.equals("prod")){
 
-        return StorageOptions.newBuilder()
-                .setProjectId("ci-cd-demo-275102")
-                .setCredentials(GoogleCredentials.fromStream(is))
-                .build()
-                .getService();
+            JsonObject jsonObject = JsonParser.parseString(gscCredentials).getAsJsonObject();
+            InputStream is = new ByteArrayInputStream(jsonObject.toString().getBytes());
+
+            return StorageOptions.newBuilder()
+                    .setProjectId("ci-cd-demo-275102")
+                    .setCredentials(GoogleCredentials.fromStream(is))
+                    .build()
+                    .getService();
+
+        }else{
+            return StorageOptions.newBuilder().build().getService();
+        }
+
     }
 
 }
