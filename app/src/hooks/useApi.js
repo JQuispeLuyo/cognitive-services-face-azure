@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import axios from 'axios';
 
-export const useFetch = (url) => {
+import { BASE_URL } from './../config/config';
+
+export const useApi = () => {
 
     /*
         Esta variable puede ser cambiada
@@ -25,7 +27,7 @@ export const useFetch = (url) => {
         setLoading(true);
         setError({ message: "" });
         axios.post(
-            'http://localhost:8080/face-recognition/upload',
+            `${BASE_URL}/api/face-recognition/upload`,
             formData,
             {
                 headers: {
