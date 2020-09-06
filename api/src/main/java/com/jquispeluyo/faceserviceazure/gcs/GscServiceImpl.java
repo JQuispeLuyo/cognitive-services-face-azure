@@ -8,8 +8,12 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.jquispeluyo.faceserviceazure.FaceServiceAzureApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,23 +28,8 @@ import java.util.Date;
 @Service
 public class GscServiceImpl implements GcsService {
 
+    @Autowired
     private Storage storage;
-
-    @Value("${GOOGLE_CREDENTIALS}")
-    private String gservicesConfig;
-
-    public GscServiceImpl() throws IOException {
-
-        System.out.println(gservicesConfig);
-        JsonObject jsonObject = JsonParser.parseString(gservicesConfig).getAsJsonObject();
-        InputStream is = new ByteArrayInputStream(jsonObject.toString().getBytes());
-
-        storage = StorageOptions.newBuilder()
-                .setProjectId("ci-cd-demo-275102")
-                .setCredentials(GoogleCredentials.fromStream(is))
-                .build()
-                .getService();
-    }
 
     @Override
     public String upload(MultipartFile filePart) throws IOException {
