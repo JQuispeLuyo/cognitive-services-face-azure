@@ -1,0 +1,1 @@
+export { default as FormFace } from './FormFace';
