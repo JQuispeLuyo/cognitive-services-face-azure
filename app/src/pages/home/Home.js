@@ -21,17 +21,25 @@ const Home = () => {
 
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-            <Grid.Column style={{ maxWidth: 400 }}>
+            <Grid.Column width={4} style={{ maxWidth: 400 }}>
                 <Header
                     as='h1'
                     color='teal'
                     textAlign='center'>
                     Face
                 </Header>
-                
+
                 <FormFace handleSubmit={handleSubmit} loading={loading} />
-                <Output response={response} error={error}/>
-                
+
+            </Grid.Column>
+
+            <Grid.Column width={9}>
+                {
+                    response.length > 0
+                        ? <Output response={response} error={error} />
+                        : ""
+                }
+
             </Grid.Column>
         </Grid>
     )

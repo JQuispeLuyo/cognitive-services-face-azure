@@ -6,7 +6,12 @@ const FormFace = ({ handleSubmit, loading }) => {
     const [value, setvalue] = useState({ file: null });
 
     const handleChange = ({ target }) => {
-        setvalue({ [target.name]: URL.createObjectURL(target.files[0]) })
+        console.log(target);
+        if(target.files[0]){
+            setvalue({ [target.name]: URL.createObjectURL(target.files[0]) })
+        }else{
+            setvalue({ [target.name]: null})
+        }
         console.log(value);
     }
 
@@ -33,7 +38,6 @@ const FormFace = ({ handleSubmit, loading }) => {
                                 name="file"
                                 fluid icon='photo'
                                 iconPosition='left'
-                                placeholder='Url...'
                                 onChange={handleChange}
                             />
                             <Button
